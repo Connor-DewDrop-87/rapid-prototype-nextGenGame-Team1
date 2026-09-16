@@ -1,23 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// Base Player Script from Mark Shennelly 
 public class Player : MonoBehaviour
 {
     [Header("Movement Stuff")]
     [Range(0, 20)]
     public float moveSpeed = 6f;
-
     public float sprintScale = 1.5f;
-
     [Range(0, 10)]
     public float mouseSensitivity = 5;
-
     private float increment = 0.25f;    //Sliders move in 0.25 incremenets.
-
     [Header("Jump Stuff")]
     [Range(1, 10)]
     public float jumpHeight = 1.5f;
+    public float baseJumpHeight;
     [Tooltip("This uses the default Unity gravity of -9.8, but change ONLY THE Y VALUE here if you want to adjust gravity")]
     public Vector3 gravity = Physics.gravity;   //Default will be Unity's gravity (-9.8) but can be changed here.
 
@@ -36,7 +33,6 @@ public class Player : MonoBehaviour
     private Vector3 velocity;
 
     [Header("Death Stuff")]
-    [Range(0, 20)]
     public bool isDead = false;
 
     void OnValidate()
@@ -51,7 +47,7 @@ public class Player : MonoBehaviour
     {
         //Probably unnecessary, but just to make gravity gets assigned properly.
         gravity = Physics.gravity;
-
+        baseJumpHeight = jumpHeight;
         //This sucker uses the CC instead of the RB.
         controller = GetComponent<CharacterController>();
 
@@ -131,19 +127,28 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // Kill the Player if they are touching an Obstacle
         if (other.gameObject.tag == "Obstacle")
         {
             isDead = true;
         }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Obstacle")
+        if (other.gameObject.tag == "Spring")
         {
-            isDead = true;
+            // Double Jump Height while inside of a Spring
+            jumpHeight = baseJumpHeight * 2;
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Spring")
+        {
+            // Return Normal Jump Height while inside of a Spring
+            jumpHeight = baseJumpHeight;
+        }
+    }
+
+
 
 
 }
