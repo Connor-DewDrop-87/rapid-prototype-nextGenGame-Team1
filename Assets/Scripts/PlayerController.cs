@@ -4,6 +4,7 @@ using UnityEngine;
 // Base Player Script from Mark Shennelly 
 public class Player : MonoBehaviour
 {
+    public Transform playerRef;
     [Header("Movement Stuff")]
     [Range(0, 20)]
     public float moveSpeed = 6f;
@@ -32,9 +33,10 @@ public class Player : MonoBehaviour
     private CharacterController controller;
     private Vector3 velocity;
 
-    [Header("Death Stuff")]
+    [Header("Flags")]
     public bool isDead = false;
-
+    public bool gotGrass = false;
+    public bool chargingUp = false;
     void OnValidate()
     {
         // Snap values to increments of 0.5
@@ -45,6 +47,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        playerRef = GetComponent<Transform>();
         //Probably unnecessary, but just to make gravity gets assigned properly.
         gravity = Physics.gravity;
         baseJumpHeight = jumpHeight;
