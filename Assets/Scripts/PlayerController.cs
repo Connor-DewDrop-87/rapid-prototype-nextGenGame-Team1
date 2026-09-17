@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public Transform playerRef;
+    GameManager gm;
     [Header("Movement Stuff")]
     [Range(0, 20)]
     public float moveSpeed = 6f;
@@ -16,6 +17,7 @@ public class Player : MonoBehaviour
     [Range(1, 10)]
     public float jumpHeight = 1.5f;
     public float baseJumpHeight;
+    public float jumpMod;
     [Tooltip("This uses the default Unity gravity of -9.8, but change ONLY THE Y VALUE here if you want to adjust gravity")]
     public Vector3 gravity = Physics.gravity;   //Default will be Unity's gravity (-9.8) but can be changed here.
 
@@ -37,6 +39,7 @@ public class Player : MonoBehaviour
     public bool isDead = false;
     public bool gotGrass = false;
     public bool chargingUp = false;
+    public bool onSpring = false;
     void OnValidate()
     {
         // Snap values to increments of 0.5
@@ -53,7 +56,7 @@ public class Player : MonoBehaviour
         baseJumpHeight = jumpHeight;
         //This sucker uses the CC instead of the RB.
         controller = GetComponent<CharacterController>();
-
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         //Hide the cursor. Hit ESC to bring it back.
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -90,31 +93,39 @@ public class Player : MonoBehaviour
 
         //Go there!
         controller.Move(move * currentSpeed * Time.deltaTime);
-
-        //If the player hits spacebar and the coyoteTime is reset, you can jump
-        if (Input.GetButtonDown("Jump") && coyoteTime > 0f)
+        if (Input.GetButton("Jump"))
         {
-            //Ooo...kinematics! v^2 = u^2 + 2(as) - AKA the third suvat equation
-            //i.e., final velocity calculation is initial velocity squared + 2 * (acceleration * vector displacement [how far, and in what direction an object has moved
-            //from its initial point to its end point])
-            //0 = u^2 + 2 * a * s
-            //u^2 = -2 * a * s
-            //Therefore, u = √-2 * a * s
-
-            //Neat, eh?
-
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y);
-            coyoteTime = 0f; // reset coyote time
+            chargingUp = true;
         }
-
-        //Jump height: tap vs hold
-        if (velocity.y > 0f && !Input.GetButton("Jump"))
+        else
         {
-            //Apply extra gravity while rising to shorten jump. You have to do this a bit differently than with a RB.
-            //lowJumpFraction = fraction of gravity applied for short jump (0 < value < 1)
-            velocity.y += Physics.gravity.y * (1f / Mathf.Clamp(lowJumpFraction, 0.01f, 1f) - 1f) * Time.deltaTime;
+            chargingUp = false;
+            jumpMod = 1 + Mathf.Pow(gm.jumpMeter.transform.localScale.x+0.5f,2);
+            Debug.Log($"Jump Mod: {jumpMod}");
         }
+        // While not charging up,
+        if (chargingUp==false)
+        {
+            //If the player hits spacebar and the coyoteTime is reset, you can jump
+            if (Input.GetButtonUp("Jump") && coyoteTime > 0f)
+            {
+                //Ooo...kinematics! v^2 = u^2 + 2(as) - AKA the third suvat equation
+                //i.e., final velocity calculation is initial velocity squared + 2 * (acceleration * vector displacement [how far, and in what direction an object has moved
+                //from its initial point to its end point])
+                //0 = u^2 + 2 * a * s
+                //u^2 = -2 * a * s
+                //Therefore, u = √-2 * a * s
 
+                //Neat, eh?
+                jumpHeight = baseJumpHeight * jumpMod;
+                if (onSpring==true)
+                {
+                    jumpHeight *= 2;
+                }
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y);
+                coyoteTime = 0f; // reset coyote time
+            }
+        }
         //Apply extra gravity when falling
         if (velocity.y < 0f)
         {
@@ -137,8 +148,8 @@ public class Player : MonoBehaviour
         }
         if (other.gameObject.tag == "Spring")
         {
-            // Double Jump Height while inside of a Spring
-            jumpHeight = baseJumpHeight * 2;
+            // In the Jump Calculations, if this is true, jump will be doubled
+            onSpring = true;
         }
     }
 
@@ -146,8 +157,8 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.tag == "Spring")
         {
-            // Return Normal Jump Height while inside of a Spring
-            jumpHeight = baseJumpHeight;
+            // No longer on Spring
+            onSpring = false;
         }
     }
 
