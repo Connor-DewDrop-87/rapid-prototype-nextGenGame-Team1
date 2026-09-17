@@ -15,7 +15,6 @@ public class Player : MonoBehaviour
     public float mouseSensitivity = 5;
     private float increment = 0.25f;    //Sliders move in 0.25 incremenets.
     [Header("Jump Stuff")]
-    [Range(1, 10)]
     public float jumpHeight = 1.5f;
     public float baseJumpHeight;
     public float jumpMod;
@@ -87,7 +86,7 @@ public class Player : MonoBehaviour
                 break;
             case State.JUMPING:
                 StartCoroutine(JumpUpGoat());
-                //currentState = State.NORMAL;
+                
                 break;
             case State.DEAD:
                 // Nothing...
@@ -187,8 +186,8 @@ public class Player : MonoBehaviour
     {
         float angleTheta = transform.rotation.y;
         Debug.Log($"{angleTheta}");
-        xPoint = Mathf.Sin(angleTheta) * jumpHeight;
-        zPoint = Mathf.Tan(angleTheta) * xPoint;
+        xPoint = Mathf.Sin(angleTheta) * jumpHeight*jumpHeight;
+        zPoint = Mathf.Tan(angleTheta) * xPoint*jumpHeight;
         if (angleTheta > Mathf.PI/4 || angleTheta < -Mathf.PI/4)
         {
             Debug.Log("Down");
@@ -216,6 +215,7 @@ public class Player : MonoBehaviour
             yield return null;
         }
         startedJumping = false;
+        jumpHeight = baseJumpHeight;
         currentState = State.NORMAL;
     }
 

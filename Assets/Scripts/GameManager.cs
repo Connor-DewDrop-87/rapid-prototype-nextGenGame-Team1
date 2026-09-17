@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
 
     public void ShowAltitude()
     {
-        altitude.text = $"Altitude: {(Mathf.Round(ps.playerRef.position.y*100))/100}m";
+        altitude.text = $"Altitude: {((Mathf.Round(ps.playerRef.position.y*100))/100)+10}m";
     }
     public void IncreaseJumpMeter()
     {
