@@ -47,6 +47,10 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("You Lose!");
         }
+        if (ps.touchedGrass==true)
+        {
+            Debug.Log("You Won!");
+        }
         if (ps.chargingUp==true)
         {
             IncreaseJumpMeter();

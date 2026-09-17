@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Obstacle
   - Spring
+  - Grass
   layers:
   - Default
   - TransparentFX

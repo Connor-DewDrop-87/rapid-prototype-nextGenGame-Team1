@@ -34,10 +34,10 @@ public class Player : MonoBehaviour
 
     private CharacterController controller;
     private Vector3 velocity;
-
+    private float xRotation = 0;
     [Header("Flags")]
     public bool isDead = false;
-    public bool gotGrass = false;
+    public bool touchedGrass = false;
     public bool chargingUp = false;
     public bool onSpring = false;
     void OnValidate()
@@ -67,7 +67,14 @@ public class Player : MonoBehaviour
         {
             return;
         }
+        if (touchedGrass==true)
+        {
+            transform.position += new Vector3(0,moveSpeed * Time.deltaTime,0);
+            CameraRef.transform.Rotate(10 * Time.deltaTime, 10 * Time.deltaTime, 10 * Time.deltaTime);
+            return;
+        }
         HandleMovement();
+        HandleMouseLook();
     }
     void HandleMovement()
     {
@@ -91,8 +98,8 @@ public class Player : MonoBehaviour
         // Determine current speed
         float currentSpeed = moveSpeed;
 
-        //Go there!
         controller.Move(move * currentSpeed * Time.deltaTime);
+
         if (Input.GetButton("Jump"))
         {
             chargingUp = true;
@@ -109,15 +116,11 @@ public class Player : MonoBehaviour
             //If the player hits spacebar and the coyoteTime is reset, you can jump
             if (Input.GetButtonUp("Jump") && coyoteTime > 0f)
             {
-                //Ooo...kinematics! v^2 = u^2 + 2(as) - AKA the third suvat equation
-                //i.e., final velocity calculation is initial velocity squared + 2 * (acceleration * vector displacement [how far, and in what direction an object has moved
-                //from its initial point to its end point])
-                //0 = u^2 + 2 * a * s
-                //u^2 = -2 * a * s
-                //Therefore, u = √-2 * a * s
-
-                //Neat, eh?
+                // Calculate Jump Height based on:
+                // 1) Base Jump Height
+                // 2) Jump Mod from how long the player charged up
                 jumpHeight = baseJumpHeight * jumpMod;
+                // 3) If they were on a Spring
                 if (onSpring==true)
                 {
                     jumpHeight *= 2;
@@ -134,9 +137,21 @@ public class Player : MonoBehaviour
 
         //Apply normal gravity by default.
         velocity.y += Physics.gravity.y * Time.deltaTime;
-
         //No matter what the jumping scenario (?) is, apply that to the character controller. If no jump is being pressed, then we are scaling by 0 so nothing happens.
         controller.Move(Vector3.up * velocity.y * Time.deltaTime);
+    }
+
+    void HandleMouseLook()
+    {
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity; //These are not scaled by deltaTime. If things get jittery, add * Time.deltaTime and increase sensivity by 100x
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -20, 20);  
+
+        CameraRef.localRotation = Quaternion.Euler(xRotation, 0f, 0f);  //Oy-ler. Only the camera can move up and down.
+        
+        transform.Rotate(Vector3.up * mouseX);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -150,6 +165,10 @@ public class Player : MonoBehaviour
         {
             // In the Jump Calculations, if this is true, jump will be doubled
             onSpring = true;
+        }
+        if (other.gameObject.tag == "Grass")
+        {
+            touchedGrass = true;
         }
     }
 
