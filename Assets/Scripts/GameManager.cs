@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public Player ps;
     public TextMeshProUGUI altitude;
     public GameObject jumpMeter;
+    [Header("Settings")]
+    public float animspeed = 1;
     // Makes sure that the GameObject, and the children of the GameObject, is Stored between scenes
     private void Awake()
     {

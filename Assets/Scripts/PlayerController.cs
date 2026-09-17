@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Transactions;
 using UnityEngine;
 // Base Player Script from Mark Shennelly 
 public class Player : MonoBehaviour
@@ -18,6 +19,10 @@ public class Player : MonoBehaviour
     public float jumpHeight = 1.5f;
     public float baseJumpHeight;
     public float jumpMod;
+    public float xPoint;
+    public float zPoint;
+    public Vector3 jumpTarget;
+    public Vector3 jumpMidPoint;
     [Tooltip("This uses the default Unity gravity of -9.8, but change ONLY THE Y VALUE here if you want to adjust gravity")]
     public Vector3 gravity = Physics.gravity;   //Default will be Unity's gravity (-9.8) but can be changed here.
 
@@ -40,6 +45,15 @@ public class Player : MonoBehaviour
     public bool touchedGrass = false;
     public bool chargingUp = false;
     public bool onSpring = false;
+    public bool startedJumping = false;
+    public enum State
+    {
+        NORMAL,
+        JUMPING,
+        DEAD,
+        WON
+    }
+    public State currentState;
     void OnValidate()
     {
         // Snap values to increments of 0.5
@@ -50,6 +64,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        currentState = State.NORMAL;
         playerRef = GetComponent<Transform>();
         //Probably unnecessary, but just to make gravity gets assigned properly.
         gravity = Physics.gravity;
@@ -63,18 +78,26 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (isDead==true)
+        switch(currentState)
         {
-            return;
+            case State.NORMAL:
+                HandleMovement();
+                HandleGravity();
+                HandleMouseLook();
+                break;
+            case State.JUMPING:
+                StartCoroutine(JumpUpGoat());
+                //currentState = State.NORMAL;
+                break;
+            case State.DEAD:
+                // Nothing...
+                break;
+            case State.WON:
+                transform.position += new Vector3(0, moveSpeed * Time.deltaTime, 0);
+                CameraRef.transform.Rotate(10 * Time.deltaTime, 10 * Time.deltaTime, 10 * Time.deltaTime);
+                break;
         }
-        if (touchedGrass==true)
-        {
-            transform.position += new Vector3(0,moveSpeed * Time.deltaTime,0);
-            CameraRef.transform.Rotate(10 * Time.deltaTime, 10 * Time.deltaTime, 10 * Time.deltaTime);
-            return;
-        }
-        HandleMovement();
-        HandleMouseLook();
+        
     }
     void HandleMovement()
     {
@@ -108,6 +131,10 @@ public class Player : MonoBehaviour
         {
             chargingUp = false;
             jumpMod = 1 + Mathf.Pow(gm.jumpMeter.transform.localScale.x+0.5f,2);
+            if (onSpring==true)
+            {
+                jumpMod += 1;
+            }
             Debug.Log($"Jump Mod: {jumpMod}");
         }
         // While not charging up,
@@ -116,19 +143,20 @@ public class Player : MonoBehaviour
             //If the player hits spacebar and the coyoteTime is reset, you can jump
             if (Input.GetButtonUp("Jump") && coyoteTime > 0f)
             {
-                // Calculate Jump Height based on:
-                // 1) Base Jump Height
-                // 2) Jump Mod from how long the player charged up
                 jumpHeight = baseJumpHeight * jumpMod;
-                // 3) If they were on a Spring
-                if (onSpring==true)
-                {
-                    jumpHeight *= 2;
-                }
-                velocity.y = Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y);
+                CheckAngle();
+                jumpTarget = new Vector3(transform.position.x+xPoint, transform.position.y, transform.position.z + zPoint);
+                jumpMidPoint = new Vector3(transform.position.x+xPoint/2, jumpHeight, transform.position.z + zPoint / 2);
                 coyoteTime = 0f; // reset coyote time
+                currentState = State.JUMPING;
             }
         }
+        
+        
+    }
+
+    void HandleGravity()
+    {
         //Apply extra gravity when falling
         if (velocity.y < 0f)
         {
@@ -137,6 +165,7 @@ public class Player : MonoBehaviour
 
         //Apply normal gravity by default.
         velocity.y += Physics.gravity.y * Time.deltaTime;
+
         //No matter what the jumping scenario (?) is, apply that to the character controller. If no jump is being pressed, then we are scaling by 0 so nothing happens.
         controller.Move(Vector3.up * velocity.y * Time.deltaTime);
     }
@@ -154,21 +183,62 @@ public class Player : MonoBehaviour
         transform.Rotate(Vector3.up * mouseX);
     }
 
+    void CheckAngle()
+    {
+        float angleTheta = transform.rotation.y;
+        Debug.Log($"{angleTheta}");
+        xPoint = Mathf.Sin(angleTheta) * jumpHeight;
+        zPoint = Mathf.Tan(angleTheta) * xPoint;
+        if (angleTheta > Mathf.PI/4 || angleTheta < -Mathf.PI/4)
+        {
+            Debug.Log("Down");
+            zPoint *= -1;
+        }
+        Debug.Log($"X: {xPoint}, Z: {zPoint}");
+    }
+    private IEnumerator JumpUpGoat()
+    {
+        if (startedJumping == true)
+        {
+            yield break;
+        }
+
+        startedJumping = true;
+
+        Vector3 target = jumpMidPoint;
+        while(MoveGoat(target))
+        {
+            yield return null;
+        }
+        target = jumpTarget;
+        while(MoveGoat(jumpTarget))
+        {
+            yield return null;
+        }
+        startedJumping = false;
+        currentState = State.NORMAL;
+    }
+
+    private bool MoveGoat(Vector3 target)
+    {
+        return target != (transform.position = Vector3.MoveTowards(transform.position, target, gm.animspeed*Time.deltaTime));
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         // Kill the Player if they are touching an Obstacle
         if (other.gameObject.tag == "Obstacle")
         {
-            isDead = true;
+            currentState = State.DEAD;
         }
         if (other.gameObject.tag == "Spring")
         {
-            // In the Jump Calculations, if this is true, jump will be doubled
+            // In the Jump Calculations, if this is true, jump will increase by 100% of base
             onSpring = true;
         }
         if (other.gameObject.tag == "Grass")
         {
-            touchedGrass = true;
+            currentState = State.WON;
         }
     }
 
