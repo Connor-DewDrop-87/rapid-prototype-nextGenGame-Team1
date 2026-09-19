@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     public float zPoint;
     public Vector3 jumpTarget;
     public Vector3 jumpMidPoint;
+    public GameObject jumpArrowIndicator;
     [Tooltip("This uses the default Unity gravity of -9.8, but change ONLY THE Y VALUE here if you want to adjust gravity")]
     public Vector3 gravity = Physics.gravity;   //Default will be Unity's gravity (-9.8) but can be changed here.
 
@@ -45,6 +46,8 @@ public class Player : MonoBehaviour
     public bool chargingUp = false;
     public bool onSpring = false;
     public bool startedJumping = false;
+    [Header("For Testing")]
+    public bool noJumping = false;
     public enum State
     {
         NORMAL,
@@ -73,6 +76,7 @@ public class Player : MonoBehaviour
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         //Hide the cursor. Hit ESC to bring it back.
         Cursor.lockState = CursorLockMode.Locked;
+        jumpArrowIndicator.SetActive(false);
     }
 
     void Update()
@@ -82,11 +86,15 @@ public class Player : MonoBehaviour
             case State.NORMAL:
                 HandleMovement();
                 HandleGravity();
+                if (noJumping == true)
+                {
+                    return;
+                }
                 HandleMouseLook();
                 break;
             case State.JUMPING:
                 StartCoroutine(JumpUpGoat());
-                
+                jumpArrowIndicator.SetActive(false);
                 break;
             case State.DEAD:
                 // Nothing...
@@ -125,16 +133,11 @@ public class Player : MonoBehaviour
         if (Input.GetButton("Jump"))
         {
             chargingUp = true;
+            jumpArrowIndicator.SetActive(true);
         }
         else
         {
             chargingUp = false;
-            jumpMod = 1 + Mathf.Pow(gm.jumpMeter.transform.localScale.x+0.5f,2);
-            if (onSpring==true)
-            {
-                jumpMod += 1;
-            }
-            Debug.Log($"Jump Mod: {jumpMod}");
         }
         // While not charging up,
         if (chargingUp==false)
@@ -142,8 +145,18 @@ public class Player : MonoBehaviour
             //If the player hits spacebar and the coyoteTime is reset, you can jump
             if (Input.GetButtonUp("Jump") && coyoteTime > 0f)
             {
+                jumpMod = 1 + Mathf.Pow(gm.jumpMeter.transform.localScale.x + 1f, 2);
+                if (onSpring == true)
+                {
+                    jumpMod += 1;
+                }
+                Debug.Log($"Jump Mod: {jumpMod}");
                 jumpHeight = baseJumpHeight * jumpMod;
                 CheckAngle();
+                if (noJumping == true)
+                {
+                    return;
+                }
                 jumpTarget = new Vector3(transform.position.x+xPoint, transform.position.y, transform.position.z + zPoint);
                 jumpMidPoint = new Vector3(transform.position.x+xPoint/2, jumpHeight, transform.position.z + zPoint / 2);
                 coyoteTime = 0f; // reset coyote time
@@ -185,14 +198,31 @@ public class Player : MonoBehaviour
     void CheckAngle()
     {
         float angleTheta = transform.rotation.y;
-        Debug.Log($"{angleTheta}");
-        xPoint = Mathf.Sin(angleTheta) * jumpHeight*jumpHeight;
-        zPoint = Mathf.Tan(angleTheta) * xPoint*jumpHeight;
-        if (angleTheta > Mathf.PI/4 || angleTheta < -Mathf.PI/4)
+        Debug.Log($"Angle: {angleTheta}");
+        // Quadrent 1 (Right Forward)
+        if (angleTheta >= 0 && angleTheta <= 0.7071068f)
         {
-            Debug.Log("Down");
-            zPoint *= -1;
+            zPoint = jumpHeight * (1-angleTheta);
+            xPoint = jumpHeight * (angleTheta);
         }
+        // Quadrent 2 (Left Forward)
+        if (angleTheta < 0 && angleTheta >= -0.7071068f)
+        {
+            zPoint = jumpHeight * (1 + angleTheta);
+            xPoint = jumpHeight * (angleTheta);
+        }
+        //// Quadrent 3 (Left Backward)
+        //if (angleTheta > -1 && angleTheta < -0.7071068f)
+        //{
+        //    zPoint = (jumpHeight * (1 + angleTheta))*-1;
+        //    xPoint = jumpHeight * (angleTheta);
+        //}
+        //// Quadrent 4 (Right Backward)
+        //if (angleTheta <= 1 && angleTheta >= 0.7071068f)
+        //{
+        //    zPoint = jumpHeight * (1 - angleTheta);
+        //    xPoint = jumpHeight * (angleTheta);
+        //}
         Debug.Log($"X: {xPoint}, Z: {zPoint}");
     }
     private IEnumerator JumpUpGoat()
@@ -224,6 +254,18 @@ public class Player : MonoBehaviour
         return target != (transform.position = Vector3.MoveTowards(transform.position, target, gm.animspeed*Time.deltaTime));
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        // If they collide with a wall while jumping, stop them from continuing 
+        // Without this, the player will be able to go through walls or get stuck
+        if (currentState == State.JUMPING)
+        {
+            StopCoroutine(JumpUpGoat());
+            startedJumping = false;
+            jumpHeight = baseJumpHeight;
+            currentState = State.NORMAL;
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         // Kill the Player if they are touching an Obstacle
