@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,12 +13,11 @@ public class GameManager : MonoBehaviour
     public AudioSource pas; // Public Audio Source
     [Header("ObjectConnections")]
     [Header("PlayerStuff")]
-    
     public Player ps;
-    public TextMeshProUGUI altitude;
-    public GameObject jumpMeter;
     [Header("Settings")]
     public float animspeed = 1;
+    public string previousScene; // To track what the previous scene was
+    public string nextScene;
     // Makes sure that the GameObject, and the children of the GameObject, is Stored between scenes
     private void Awake()
     {
@@ -34,44 +34,35 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-
-        ps = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        altitude = GameObject.Find("Altitude").GetComponent<TextMeshProUGUI>();
-        jumpMeter = GameObject.Find("JumpMeter");
         pas = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        ShowAltitude();
-        if (ps.isDead==true)
+        if (ps==null)
         {
+            ps = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+            return;
+        }
+        if (ps.currentState==Player.State.DEAD)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                SceneManager.LoadScene(previousScene);
+            }
             Debug.Log("You Lose!");
         }
-        if (ps.touchedGrass==true)
+        if (ps.currentState == Player.State.WON)
         {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                SceneManager.LoadScene(nextScene);
+            }
             Debug.Log("You Won!");
         }
-        if (ps.chargingUp==true)
-        {
-            IncreaseJumpMeter();
-        }
-        else
-        {
-            jumpMeter.transform.localScale = new Vector3(0, 1, 1);
-        }
+        
     }
 
-    public void ShowAltitude()
-    {
-        altitude.text = $"Altitude: {((Mathf.Round(ps.playerRef.position.y*100))/100)+10}m";
-    }
-    public void IncreaseJumpMeter()
-    {
-        if (jumpMeter.transform.localScale.x <= 1)
-        {
-            jumpMeter.transform.localScale += new Vector3(Time.deltaTime, 0, 0);
-        }
-    }
+    
 }

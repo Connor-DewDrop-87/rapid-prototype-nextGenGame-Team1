@@ -114,6 +114,7 @@ GameObject:
   - component: {fileID: 1273882472804172358}
   - component: {fileID: 5959187949487585167}
   - component: {fileID: 1352751494606230717}
+  - component: {fileID: 8518091246829197579}
   m_Layer: 5
   m_Name: Altitude
   m_TagString: Untagged
@@ -237,6 +238,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8518091246829197579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2647126826192690641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e1cbed780237541af807064893810b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  altitude: {fileID: 0}
+  ps: {fileID: 0}
 --- !u!1 &8779572780016110807
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,6 +263,7 @@ GameObject:
   - component: {fileID: 6734781330234580736}
   - component: {fileID: 4608033824043818820}
   - component: {fileID: 6051876991184694255}
+  - component: {fileID: 8099786135364170217}
   m_Layer: 5
   m_Name: JumpMeter
   m_TagString: Untagged
@@ -312,3 +328,17 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8099786135364170217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8779572780016110807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17f38242de3220847b7d0dfb8ed3d00a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpMeter: {fileID: 0}
+  ps: {fileID: 0}

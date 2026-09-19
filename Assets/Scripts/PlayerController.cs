@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Transactions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 // Base Player Script from Mark Shennelly 
 public class Player : MonoBehaviour
 {
+
     public Transform playerRef;
     GameManager gm;
+    JumpMeter jm;
     [Header("Movement Stuff")]
     [Range(0, 20)]
     public float moveSpeed = 6f;
@@ -74,6 +77,7 @@ public class Player : MonoBehaviour
         //This sucker uses the CC instead of the RB.
         controller = GetComponent<CharacterController>();
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        jm = GameObject.Find("JumpMeter").GetComponent<JumpMeter>();
         //Hide the cursor. Hit ESC to bring it back.
         Cursor.lockState = CursorLockMode.Locked;
         jumpArrowIndicator.SetActive(false);
@@ -101,7 +105,7 @@ public class Player : MonoBehaviour
                 break;
             case State.WON:
                 transform.position += new Vector3(0, moveSpeed * Time.deltaTime, 0);
-                CameraRef.transform.Rotate(10 * Time.deltaTime, 10 * Time.deltaTime, 10 * Time.deltaTime);
+                CameraRef.transform.Rotate(0, 10 * Time.deltaTime, 0);
                 break;
         }
         
@@ -145,7 +149,7 @@ public class Player : MonoBehaviour
             //If the player hits spacebar and the coyoteTime is reset, you can jump
             if (Input.GetButtonUp("Jump") && coyoteTime > 0f)
             {
-                jumpMod = 1 + Mathf.Pow(gm.jumpMeter.transform.localScale.x + 1f, 2);
+                jumpMod = 1 + Mathf.Pow(jm.jumpMeter.transform.localScale.x + 1f, 2);
                 if (onSpring == true)
                 {
                     jumpMod += 1;
@@ -260,7 +264,6 @@ public class Player : MonoBehaviour
         // Without this, the player will be able to go through walls or get stuck
         if (currentState == State.JUMPING)
         {
-            StopCoroutine(JumpUpGoat());
             startedJumping = false;
             jumpHeight = baseJumpHeight;
             currentState = State.NORMAL;
@@ -271,6 +274,7 @@ public class Player : MonoBehaviour
         // Kill the Player if they are touching an Obstacle
         if (other.gameObject.tag == "Obstacle")
         {
+            gm.previousScene = SceneManager.GetActiveScene().name;
             currentState = State.DEAD;
         }
         if (other.gameObject.tag == "Spring")
@@ -280,6 +284,8 @@ public class Player : MonoBehaviour
         }
         if (other.gameObject.tag == "Grass")
         {
+            NextLevel tl = other.gameObject.GetComponent<NextLevel>();
+            gm.nextScene = tl.nextLevel;
             currentState = State.WON;
         }
     }
