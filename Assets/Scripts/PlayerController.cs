@@ -250,6 +250,11 @@ public class Player : MonoBehaviour
         }
         startedJumping = false;
         jumpHeight = baseJumpHeight;
+        // Invert Velocity so that the player doesnt go through the floor (A little clunky but it works for now)
+        if (controller.isGrounded==true)
+        {
+            controller.Move(-velocity);
+        }
         currentState = State.NORMAL;
     }
 
@@ -259,6 +264,17 @@ public class Player : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision)
+    {
+        // If they collide with a wall while jumping, stop them from continuing 
+        // Without this, the player will be able to go through walls or get stuck
+        if (currentState == State.JUMPING)
+        {
+            startedJumping = false;
+            jumpHeight = baseJumpHeight;
+            currentState = State.NORMAL;
+        }
+    }
+    private void OnCollisionStay(Collision collision)
     {
         // If they collide with a wall while jumping, stop them from continuing 
         // Without this, the player will be able to go through walls or get stuck
