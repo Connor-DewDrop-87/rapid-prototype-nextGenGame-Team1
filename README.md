@@ -12,12 +12,13 @@ Note: you cannot move horizontally while jumping
 How to Play: Climb over walls, then it gets to moving platform or springs, etc.
 
 Hitting platforms at angles in later levels to jump up to higher platforms.
-Lower levels focus on jumping over obstacles
+Lower levels focus on jumping over obstacles.
 
 ------------------------------------------Game Updates-------------------------------------------------------------------
 Added Basic Player Movement and Obstacle Collision things - September 16th
 Added Springs (as obstacles) - September 16th
-Added Jump - by September,9,2026
+Added Jump - September 12th
+Added Textures, and Goat- September 22nd
 
 Game Engine: Unity
 Game Engine Version of Unity: 2022.3.62
