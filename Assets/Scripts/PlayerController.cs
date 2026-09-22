@@ -253,7 +253,7 @@ public class Player : MonoBehaviour
         // Invert Velocity so that the player doesnt go through the floor (A little clunky but it works for now)
         if (controller.isGrounded==true)
         {
-            controller.Move(-velocity);
+            controller.Move(new Vector3(0,-velocity.y,0));
         }
         currentState = State.NORMAL;
     }
