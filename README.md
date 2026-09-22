@@ -1,7 +1,7 @@
 Name of Game: Jump Goat
 Group Members: Connor Almeyda, John Yeilding, Diogo Campos, Arijah Urrahman
 Rapid Prototype #1, Digital Prototyping Development, Mohawk College
-Objective: Get to the top
+Objective statement: Get to the top
 Player's goals: jump, or climb over obstacles to reach the objective
 
 --------------------------------------Controls and How to Play-----------------------------------------------
@@ -14,9 +14,10 @@ How to Play: Climb over walls, then it gets to moving platform or springs, etc.
 Hitting platforms at angles in later levels to jump up to higher platforms.
 Lower levels focus on jumping over obstacles
 
-Game Updates:
-Added Basic Player Movement and Obstacle Collision things
-Added Springs (as obstacles)
+------------------------------------------Game Updates-------------------------------------------------------------------
+Added Basic Player Movement and Obstacle Collision things - September 16th
+Added Springs (as obstacles) - September 16th
+Added Jump - by September,9,2026
 
 Game Engine: Unity
 Game Engine Version of Unity: 2022.3.62
