@@ -16,7 +16,7 @@ Lower levels focus on jumping over obstacles
 
 How to progress
 
-Progress:
+Game Updates:
 Added Basic Player Movement and Obstacle Collision things
 Added Springs (as obstacles)
 
