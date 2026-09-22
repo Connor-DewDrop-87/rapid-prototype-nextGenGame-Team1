@@ -24,11 +24,11 @@ public class Player : MonoBehaviour
     public float xPoint;
     public float zPoint;
     public Vector3 jumpTarget;
-    public Vector3 jumpMidPoint;
+    public Vector3 jumpOrigin;
     public GameObject jumpArrowIndicator;
     [Tooltip("This uses the default Unity gravity of -9.8, but change ONLY THE Y VALUE here if you want to adjust gravity")]
     public Vector3 gravity = Physics.gravity;   //Default will be Unity's gravity (-9.8) but can be changed here.
-
+    public float time;
     private float coyoteTime;
     public float coyoteTimeMax = 0.1f; // 100ms coyote time
 
@@ -162,7 +162,7 @@ public class Player : MonoBehaviour
                     return;
                 }
                 jumpTarget = new Vector3(transform.position.x+xPoint, transform.position.y, transform.position.z + zPoint);
-                jumpMidPoint = new Vector3(transform.position.x+xPoint/2, jumpHeight, transform.position.z + zPoint / 2);
+                jumpOrigin = new Vector3(transform.position.x, transform.position.y, transform.position.z);
                 coyoteTime = 0f; // reset coyote time
                 currentState = State.JUMPING;
             }
@@ -238,14 +238,13 @@ public class Player : MonoBehaviour
 
         startedJumping = true;
 
-        Vector3 target = jumpMidPoint;
-        while(MoveGoat(target))
+        while (time < 1)
         {
-            yield return null;
-        }
-        target = jumpTarget;
-        while(MoveGoat(jumpTarget))
-        {
+            time += Time.deltaTime;
+            float lerpVal = time;
+            Vector3 currentPos = Vector3.Lerp(jumpFrom, jumpTarget, lerpVal);
+            currentPos.y += 0.25f * Mathf.Sin(Mathf.Clamp01(lerpVal) * Mathf.PI); 
+            transform.position = currentPos;
             yield return null;
         }
         startedJumping = false;
@@ -258,10 +257,10 @@ public class Player : MonoBehaviour
         currentState = State.NORMAL;
     }
 
-    private bool MoveGoat(Vector3 target)
-    {
-        return target != (transform.position = Vector3.MoveTowards(transform.position, target, gm.animspeed*Time.deltaTime));
-    }
+    //private bool MoveGoat(Vector3 target)
+    //{
+    //    return target != (transform.position = Vector3.MoveTowards(transform.position, target, gm.animspeed*Time.deltaTime));
+    //}
 
     private void OnCollisionEnter(Collision collision)
     {
