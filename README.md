@@ -14,8 +14,6 @@ How to Play: Climb over walls, then it gets to moving platform or springs, etc.
 Hitting platforms at angles in later levels to jump up to higher platforms.
 Lower levels focus on jumping over obstacles
 
-How to progress
-
 Game Updates:
 Added Basic Player Movement and Obstacle Collision things
 Added Springs (as obstacles)
