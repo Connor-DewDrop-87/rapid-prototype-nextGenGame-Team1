@@ -39,3 +39,4 @@ Jump Mechanic source- Claude Opus 5.5 LLM using prompts
 ### Sources
 - Claude Opus 5.5 LLM using prompts
 - [Coroutine Jump Arc](https://discussions.unity.com/t/coroutine-jump-arc/899081)
+- **The Goat:** [Rigged Goat PBR Textured 3D Model for Animation](https://sketchfab.com/3d-models/rigged-goat-pbr-textured-3d-model-for-animation-be69dcbbe6a64725a3e20417d8296b9c)
