@@ -34,7 +34,6 @@ The players goal is to jump or climb over obstacles to reach the goal.
 
 Player must climb over walls, and move through obstacles such as moving platforms and springs
 
-## Level Design
 In later levels, players can hit platforms at angles to jump up to higher platforms.
 Early levels focus on jumping over obstacles.
 
@@ -42,6 +41,9 @@ Early levels focus on jumping over obstacles.
 The player uses the charge jump to reach the objective
 
 The levels progress in difficulty the more the player progresses
+
+## Level Design
+The earlier levels focus on jumping over obstacles. Later levels introduce more difficult jumps, including hitting platforms at angles to reach higher platforms.
 
 ## Game Updates
 - **September 12th:** Added jump mechanic.
@@ -53,7 +55,7 @@ The levels progress in difficulty the more the player progresses
 - **Engine:** Unity
 - **Unity Version:** 2022.3.62
 
-### Assets/ Citations
+### Assets / Citations
 - Claude Opus 5.5 LLM using prompts
 - [Coroutine Jump Arc](https://discussions.unity.com/t/coroutine-jump-arc/899081)
 - **The Goat:** [Rigged Goat PBR Textured 3D Model for Animation](https://sketchfab.com/3d-models/rigged-goat-pbr-textured-3d-model-for-animation-be69dcbbe6a64725a3e20417d8296b9c)
