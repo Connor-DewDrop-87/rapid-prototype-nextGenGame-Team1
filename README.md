@@ -19,6 +19,7 @@ Added Basic Player Movement and Obstacle Collision things - September 16th
 Added Springs (as obstacles) - September 16th
 Added Jump - September 12th
 Added Textures, and Goat- September 22nd
+Jump Mechanic source- Claude Opus 5.5 LLM using prompts
 
 Game Engine: Unity
 Game Engine Version of Unity: 2022.3.62
