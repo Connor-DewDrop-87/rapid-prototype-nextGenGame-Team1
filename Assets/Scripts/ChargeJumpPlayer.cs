@@ -93,6 +93,7 @@ public class ChargeJumpPlayer : MonoBehaviour
 
     void Update()
     {
+        Debug.Log($"Charge Percent: {ChargePercent}");
         // Touching Grass does Wonders
         if (touchedGrass == true)
         {
