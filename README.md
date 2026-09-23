@@ -4,7 +4,7 @@
 
 - **Project:** Rapid Prototype #1, Digital Prototyping Development, Mohawk College
 
-## Game Mechanic / feature
+## Main Game Mechanic / Feature
 
 Charge Jump Mechanic
 
