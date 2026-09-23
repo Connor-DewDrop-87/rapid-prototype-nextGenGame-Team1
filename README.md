@@ -70,3 +70,4 @@ The earlier levels focus on jumping over obstacles. Later levels introduce more 
 - [Getting Over It with Bennett Foddy](https://www.youtube.com/watch?v=hu0PGGkvniQ)
 - [Baby Steps](https://www.youtube.com/watch?v=ht75OoMs01U)
 - [A Difficult Game About Climbing](https://www.youtube.com/watch?v=2Xf8nK3V2uc)
+- [Hold To Jump Longer - Unity Tutorial](https://youtu.be/d6FfkA46zjA?si=afmkBIMkBF5o0GmG)
