@@ -36,7 +36,12 @@ Jump Mechanic source- Claude Opus 5.5 LLM using prompts
 **Engine:** Unity
 **Unity Version:** 2022.3.62
 
-### Sources
+### Citations
 - Claude Opus 5.5 LLM using prompts
 - [Coroutine Jump Arc](https://discussions.unity.com/t/coroutine-jump-arc/899081)
 - **The Goat:** [Rigged Goat PBR Textured 3D Model for Animation](https://sketchfab.com/3d-models/rigged-goat-pbr-textured-3d-model-for-animation-be69dcbbe6a64725a3e20417d8296b9c)
+- **Free Rocks:** [Free Rocks | 3D Landscapes | Unity Asset Store](https://assetstore.unity.com/packages/3d/environments/landscapes/free-rocks-19288)
+- **Rocks and Boulders:** [Rock and Boulders 2 | 3D Exterior | Unity Asset Store](https://assetstore.unity.com/packages/3d/props/exterior/rock-and-boulders-2-6947)
+- **Hill Rock Mountain Terrain:** [Hill Rock Mountain Terrain | 3D Landscapes | Unity Asset Store](https://assetstore.unity.com/packages/3d/environments/landscapes/hill-rock-mountain-terrain-282889)
+- **Rugged Mountains:** [Rugged Mountains - Terrains, Stamps and Brushes | 3D Landscapes | Unity Asset Store](https://assetstore.unity.com/packages/3d/environments/landscapes/rugged-mountains-terrains-stamps-and-brushes-220806)
+- **Skybox:** [Skybox Series Free | 2D Sky | Unity Asset Store](https://assetstore.unity.com/packages/2d/textures-materials/sky/skybox-series-free-103633)
