@@ -8,6 +8,11 @@
 
 Charge Jump Mechanic
 
+## Design Rationale
+Jump goat is designed around using the charge jump to get past obstacles and reach the objective. The levels are designed to gradually challenge the player by starting with simpler obstacles and introducing more difficult jumps later on. 
+
+The charge jump is the main mechanic because the player would need to judge when and where is it safe in order to progress. This allows us to test whether the mechanic provides enough of a challenge and whether making difficult jumps feels rewarding.
+
 ## Objective statement 
 
 We wish to test whether or not the charge jump mechanic is enough of a challenge to the player, as well as whether or not the failures or successes of the player feels rewarding.
