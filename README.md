@@ -20,10 +20,10 @@ The players goal is to jump or climb over obstacles to reach the goal.
 
 ## How to Play
 
-Climb over walls, then it gets to moving platform or springs, etc.
+Player must climb over walls, and move through obstacles such as moving platforms and springs
 
-Hitting platforms at angles in later levels to jump up to higher platforms.
-Lower levels focus on jumping over obstacles.
+In later levels, players can hit platforms at angles to jump up to higher platforms.
+Early levels focus on jumping over obstacles.
 
 ------------------------------------------Game Updates-------------------------------------------------------------------
 Added Basic Player Movement and Obstacle Collision things - September 16th
