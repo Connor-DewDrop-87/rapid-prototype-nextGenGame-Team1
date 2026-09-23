@@ -26,11 +26,10 @@ In later levels, players can hit platforms at angles to jump up to higher platfo
 Early levels focus on jumping over obstacles.
 
 ## Game Updates
-Added Basic Player Movement and Obstacle Collision things - September 16th
-Added Springs (as obstacles) - September 16th
-Added Jump - September 12th
-Added Textures, and Goat- September 22nd
-Jump Mechanic source- Claude Opus 5.5 LLM using prompts
+**September 12th:** Added jump mechanic.
+**September 16th:** Added Basic Player Movement and Obstacle Collision.
+**September 16th:** Added Springs as obstacles.
+**September 22nd:** Added textures and goat.
 
 ## Game Engine
 **Engine:** Unity
