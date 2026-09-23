@@ -39,6 +39,7 @@ Early levels focus on jumping over obstacles.
 
 ## Gameplay
 The player uses the charge jump to reach the objective
+
 The levels progress in difficulty the more the player progresses
 
 ## Game Updates
