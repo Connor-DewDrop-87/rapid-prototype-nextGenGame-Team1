@@ -10,8 +10,11 @@ We wish to test whether or not the charge jump mechanic is enough of a challenge
 The players goal is to jump or climb over obstacles to reach the goal.
 
 ## Controls
-
-WASD/Arrow Keys to move horizontally, Mouse to look around, hold the Space Key to jump in the direction you're looking.
+| Input | Action |
+|---|---| 
+| WASD / Arrow Keys | move horizontally |
+| Mouse | look around | 
+| Space | Jump in the direction you're looking |
 
 **Note:** you cannot move horizontally while jumping
 
