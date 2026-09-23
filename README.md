@@ -38,3 +38,4 @@ Jump Mechanic source- Claude Opus 5.5 LLM using prompts
 
 ## Sources
 Claude Opus 5.5 LLM using prompts
+[Coroutine Jump Arc](https://discussions.unity.com/t/coroutine-jump-arc/899081)
