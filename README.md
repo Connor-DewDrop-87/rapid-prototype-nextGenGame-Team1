@@ -34,6 +34,7 @@ The players goal is to jump or climb over obstacles to reach the goal.
 
 Player must climb over walls, and move through obstacles such as moving platforms and springs
 
+## Level Design
 In later levels, players can hit platforms at angles to jump up to higher platforms.
 Early levels focus on jumping over obstacles.
 
