@@ -25,12 +25,16 @@ Player must climb over walls, and move through obstacles such as moving platform
 In later levels, players can hit platforms at angles to jump up to higher platforms.
 Early levels focus on jumping over obstacles.
 
-------------------------------------------Game Updates-------------------------------------------------------------------
+## Game Updates
 Added Basic Player Movement and Obstacle Collision things - September 16th
 Added Springs (as obstacles) - September 16th
 Added Jump - September 12th
 Added Textures, and Goat- September 22nd
 Jump Mechanic source- Claude Opus 5.5 LLM using prompts
 
-Game Engine: Unity
-Game Engine Version of Unity: 2022.3.62
+## Game Engine
+**Engine:** Unity
+**Unity Version:** 2022.3.62
+
+## Sources
+Claude Opus 5.5 LLM using prompts
