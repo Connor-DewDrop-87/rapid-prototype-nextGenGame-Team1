@@ -49,6 +49,7 @@ The earlier levels focus on jumping over obstacles. Later levels introduce more 
 - **September 12th:** Added jump mechanic.
 - **September 16th:** Added Basic Player Movement and Obstacle Collision.
 - **September 16th:** Added Springs as obstacles.
+- **September 19th:** Added Level Loader
 - **September 22nd:** Added textures and goat.
 
 ## Game Engine
