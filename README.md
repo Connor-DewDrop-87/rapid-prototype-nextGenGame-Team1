@@ -3,11 +3,11 @@
 **Project**: Rapid Prototype #1, Digital Prototyping Development, Mohawk College
 ## Objective statement: 
 
-We wish to test whether or not the charge jump mechanic is enough of a challenge to the player, as well as whether or not the failures or successes of the player feels rewarding
+We wish to test whether or not the charge jump mechanic is enough of a challenge to the player, as well as whether or not the failures or successes of the player feels rewarding.
 
-**Player's goals**: 
+## Player's goals: 
 
-The players goal is to jump or climb over obstacles to reach the goal
+The players goal is to jump or climb over obstacles to reach the goal.
 
 --------------------------------------Controls and How to Play-----------------------------------------------
 
