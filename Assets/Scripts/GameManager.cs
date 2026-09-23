@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public AudioSource pas; // Public Audio Source
     [Header("ObjectConnections")]
     [Header("PlayerStuff")]
-    public Player ps;
+    public ChargeJumpPlayer ps;
     [Header("Settings")]
     public float animspeed = 1;
     public string previousScene; // To track what the previous scene was
@@ -42,10 +42,10 @@ public class GameManager : MonoBehaviour
     {
         if (ps==null)
         {
-            ps = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+            ps = GameObject.FindGameObjectWithTag("Player").GetComponent<ChargeJumpPlayer>();
             return;
         }
-        if (ps.currentState==Player.State.DEAD)
+        if (ps.isDead==true)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
             }
             Debug.Log("You Lose!");
         }
-        if (ps.currentState == Player.State.WON)
+        if (ps.touchedGrass==true)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {

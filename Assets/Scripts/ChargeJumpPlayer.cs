@@ -1,4 +1,6 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // player with charge jump
 // hold space to charge, let go to jump
@@ -6,12 +8,14 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
 public class ChargeJumpPlayer : MonoBehaviour
 {
-    enum JumpState { Ready, Charging, Airborne }
+    public enum JumpState { Ready, Charging, Airborne }
 
     [Header("References")]
     public Transform cameraRef;
     public GameObject chargeIndicator;
-
+    GameManager gm;
+    JumpMeter jm;
+    public GameObject jumpArrowIndicator;
     [Header("Movement")]
     public float moveSpeed = 6f;
     public float mouseSensitivity = 2f;
@@ -38,9 +42,8 @@ public class ChargeJumpPlayer : MonoBehaviour
     public float landIgnoreTime = 0.15f;
 
     [Header("Debug")]
-    [SerializeField] JumpState state = JumpState.Ready;
+    public JumpState state = JumpState.Ready;
     [SerializeField] bool isGrounded;
-
     public float ChargePercent => Mathf.Clamp01(chargeTimer / maxChargeTime);
 
     Rigidbody rb;
@@ -51,6 +54,12 @@ public class ChargeJumpPlayer : MonoBehaviour
     bool launchQueued;
     float launchTime;
     Vector3 lastVelocity;
+
+    [Header("Flags")]
+    public bool isDead = false;
+    public bool touchedGrass = false;
+    public bool onSpring = false;
+    
 
     // velocity is linearVelocity in unity 6
     Vector3 Velocity
@@ -75,13 +84,20 @@ public class ChargeJumpPlayer : MonoBehaviour
         rb.freezeRotation = true;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        jm = GameObject.Find("JumpMeter").GetComponent<JumpMeter>();
         yaw = transform.eulerAngles.y;
         Cursor.lockState = CursorLockMode.Locked;
+        jumpArrowIndicator.SetActive(false);
     }
 
     void Update()
     {
+        // Touching Grass does Wonders
+        if (touchedGrass == true)
+        {
+            return;
+        }
         moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         if (CanLook) HandleLook();
@@ -93,6 +109,11 @@ public class ChargeJumpPlayer : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Touching Grass does Wonders
+        if (touchedGrass==true)
+        {
+            return;
+        }
         CheckGround();
 
         if (launchQueued) Launch();
@@ -107,6 +128,7 @@ public class ChargeJumpPlayer : MonoBehaviour
 
         // save velocity for wall bounce
         lastVelocity = Velocity;
+        CheckJumpIndicator();
     }
 
     // ground check
@@ -192,6 +214,18 @@ public class ChargeJumpPlayer : MonoBehaviour
         launchQueued = false;
     }
 
+    void CheckJumpIndicator()
+    {
+        if (state == JumpState.Charging)
+        {
+            jumpArrowIndicator.SetActive(true);
+        }
+        else
+        {
+            jumpArrowIndicator.SetActive(false);
+        }
+    }
+
     // bounce off walls
     void OnCollisionEnter(Collision collision)
     {
@@ -222,4 +256,36 @@ public class ChargeJumpPlayer : MonoBehaviour
         Gizmos.color = isGrounded ? Color.green : Color.red;
         Gizmos.DrawLine(origin, origin + Vector3.down * reach);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // Kill the Player if they are touching an Obstacle
+        if (other.gameObject.tag == "Obstacle")
+        {
+            gm.previousScene = SceneManager.GetActiveScene().name;
+            isDead = true;
+        }
+        if (other.gameObject.tag == "Spring")
+        {
+            // In the Jump Calculations, if this is true, jump will increase by 100% of base
+            onSpring = true;
+        }
+        if (other.gameObject.tag == "Grass")
+        {
+            NextLevel tl = other.gameObject.GetComponent<NextLevel>();
+            gm.nextScene = tl.nextLevel;
+            touchedGrass = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Spring")
+        {
+            // No longer on Spring
+            onSpring = false;
+        }
+    }
+
+    
 }

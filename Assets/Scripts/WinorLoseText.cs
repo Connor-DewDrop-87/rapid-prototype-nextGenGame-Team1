@@ -6,33 +6,30 @@ public class WinorLoseText : MonoBehaviour
 {
     public GameObject nextLevelTextBox;
     public GameObject resetTextBox;
-    public Player ps;
+    public ChargeJumpPlayer ps;
     // Start is called before the first frame update
     void Start()
     {
         nextLevelTextBox = GameObject.Find("NextLevel");
         resetTextBox = GameObject.Find("Reset");
-        ps = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        ps = GameObject.FindGameObjectWithTag("Player").GetComponent<ChargeJumpPlayer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (ps.currentState == Player.State.DEAD)
+        if (ps.isDead == true)
         {
             resetTextBox.SetActive(true);
         }
-        else
-        {
-            resetTextBox.SetActive(false);
-        }
-        if (ps.currentState == Player.State.WON)
+        else if (ps.touchedGrass == true)
         {
             nextLevelTextBox.SetActive(true);
         }
         else
         {
             nextLevelTextBox.SetActive(false);
+            resetTextBox.SetActive(false);
         }
     }
 }
