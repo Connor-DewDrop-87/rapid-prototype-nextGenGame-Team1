@@ -64,3 +64,8 @@ The earlier levels focus on jumping over obstacles. Later levels introduce more 
 - **Hill Rock Mountain Terrain:** [Hill Rock Mountain Terrain | 3D Landscapes | Unity Asset Store](https://assetstore.unity.com/packages/3d/environments/landscapes/hill-rock-mountain-terrain-282889)
 - **Rugged Mountains:** [Rugged Mountains - Terrains, Stamps and Brushes | 3D Landscapes | Unity Asset Store](https://assetstore.unity.com/packages/3d/environments/landscapes/rugged-mountains-terrains-stamps-and-brushes-220806)
 - **Skybox:** [Skybox Series Free | 2D Sky | Unity Asset Store](https://assetstore.unity.com/packages/2d/textures-materials/sky/skybox-series-free-103633)
+- [ONLY UP!](https://youtu.be/bVFsHqvaI70?si=G0NBnNPt7I0_X5qh)
+- [Chained Together](https://youtu.be/opYUWEqehAU?si=ZIX_KZ8N_FEmglZk)
+- [Getting Over It with Bennett Foddy](https://www.youtube.com/watch?v=hu0PGGkvniQ)
+- [Baby Steps](https://www.youtube.com/watch?v=ht75OoMs01U)
+- [A Difficult Game About Climbing](https://www.youtube.com/watch?v=2Xf8nK3V2uc)
