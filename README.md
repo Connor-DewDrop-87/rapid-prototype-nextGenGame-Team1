@@ -1,7 +1,7 @@
 Name of Game: Jump Goat
 Group Members: Connor Almeyda, John Yeilding, Diogo Campos, Arijah Urrahman
 Rapid Prototype #1, Digital Prototyping Development, Mohawk College
-Objective statement: Get to the top
+Objective statement: We wish to test whether or not the charge jump mechanic is enough of a challenge to the player, as well as whether or not the failures or successes of the player feels rewarding
 Player's goals: jump, or climb over obstacles to reach the objective
 
 --------------------------------------Controls and How to Play-----------------------------------------------
