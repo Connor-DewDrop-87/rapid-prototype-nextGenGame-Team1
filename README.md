@@ -1,20 +1,22 @@
 # Name of Game: Jump Goat
 **Group Members**: Connor Almeyda, John Yeilding, Diogo Campos, Arijah Urrahman
 **Project**: Rapid Prototype #1, Digital Prototyping Development, Mohawk College
-## Objective statement: 
+## Objective statement 
 
 We wish to test whether or not the charge jump mechanic is enough of a challenge to the player, as well as whether or not the failures or successes of the player feels rewarding.
 
-## Player's goals: 
+## Player's goals 
 
 The players goal is to jump or climb over obstacles to reach the goal.
 
---------------------------------------Controls and How to Play-----------------------------------------------
+## Controls
 
 Controls: WASD/Arrow Keys to move horizontally, Mouse to look around, hold the Space Key to jump in the direction you're looking.
-Note: you cannot move horizontally while jumping
+**Note**: you cannot move horizontally while jumping
 
-How to Play: Climb over walls, then it gets to moving platform or springs, etc.
+## How to Play
+
+Climb over walls, then it gets to moving platform or springs, etc.
 
 Hitting platforms at angles in later levels to jump up to higher platforms.
 Lower levels focus on jumping over obstacles.
