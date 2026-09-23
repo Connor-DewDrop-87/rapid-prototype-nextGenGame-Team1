@@ -37,6 +37,10 @@ Player must climb over walls, and move through obstacles such as moving platform
 In later levels, players can hit platforms at angles to jump up to higher platforms.
 Early levels focus on jumping over obstacles.
 
+## Gameplay
+The player uses the charge jump to reach the objective
+The levels progress in difficulty the more the player progresses
+
 ## Game Updates
 - **September 12th:** Added jump mechanic.
 - **September 16th:** Added Basic Player Movement and Obstacle Collision.
