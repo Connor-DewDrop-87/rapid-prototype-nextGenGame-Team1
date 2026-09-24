@@ -51,6 +51,7 @@ The earlier levels focus on jumping over obstacles. Later levels introduce more 
 - **September 16th:** Added Springs as obstacles.
 - **September 19th:** Added Level Loader
 - **September 22nd:** Added textures and goat.
+- **September 23rd:** Added an additional map
 
 ## Game Engine
 - **Engine:** Unity
