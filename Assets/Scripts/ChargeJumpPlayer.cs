@@ -41,6 +41,11 @@ public class ChargeJumpPlayer : MonoBehaviour
     public float wallAngle = 60f;
     public float landIgnoreTime = 0.15f;
 
+    [Header("Stuck")]
+    public float stuckSpeed = 0.1f;   // below this speed counts as not moving
+    public float stuckTime = 0.2f;    // how long before we count as stuck
+    float stuckTimer;
+
     [Header("Debug")]
     public JumpState state = JumpState.Ready;
     [SerializeField] bool isGrounded;
@@ -75,6 +80,7 @@ public class ChargeJumpPlayer : MonoBehaviour
 
     bool CanLook => state != JumpState.Airborne;
     bool CanWalk => state == JumpState.Ready;
+    bool Supported => isGrounded || stuckTimer >= stuckTime;   // on ground or stuck on a ledge
 
     void Awake()
     {
@@ -116,6 +122,10 @@ public class ChargeJumpPlayer : MonoBehaviour
             return;
         }
         CheckGround();
+
+        // count how long we've barely been moving
+        if (Velocity.magnitude < stuckSpeed) stuckTimer += Time.fixedDeltaTime;
+        else stuckTimer = 0f;
 
         if (launchQueued) Launch();
 
@@ -164,7 +174,7 @@ public class ChargeJumpPlayer : MonoBehaviour
     // charging
     void HandleChargeInput()
     {
-        if (state == JumpState.Ready && isGrounded && Input.GetButtonDown("Jump"))
+        if (state == JumpState.Ready && Supported && Input.GetButtonDown("Jump"))
         {
             state = JumpState.Charging;
             chargeTimer = 0f;
@@ -174,7 +184,7 @@ public class ChargeJumpPlayer : MonoBehaviour
         {
             chargeTimer = Mathf.Min(chargeTimer + Time.deltaTime, maxChargeTime);
 
-            if (!isGrounded)                        // fell off so cancel
+            if (!Supported)                         // fell off so cancel
                 ResetJump();
             else if (Input.GetButtonUp("Jump"))
                 launchQueued = true;                // jump next fixed update
@@ -201,7 +211,7 @@ public class ChargeJumpPlayer : MonoBehaviour
         if (state != JumpState.Airborne) return;
 
         bool pastLaunch = Time.time - launchTime > landIgnoreTime;
-        if (isGrounded && pastLaunch && Velocity.y <= 0.1f)
+        if (Supported && pastLaunch && Velocity.y <= 0.1f)
         {
             Velocity = new Vector3(0f, Velocity.y, 0f);   // stop sliding
             ResetJump();
