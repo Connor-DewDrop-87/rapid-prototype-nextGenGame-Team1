@@ -58,7 +58,7 @@ The earlier levels focus on jumping over obstacles. Later levels introduce more 
 - **Unity Version:** 2022.3.62
 
 ### Assets / Citations
-- Claude Opus 5.5 LLM using prompts
+- Claude Opus 5.5 LLM using prompts: used to write conceptual jump code for the charge jump mechanic.
 - **Prompts used:** Write me conceptual jump code that I can later implement into this player script myself that utilises rigidbodies, capsule colliders and raycasts for physics and detection. The player can look around and use WASD to move but if they want to jump they have to hold space. The amount of time they hold space determines how far and high they'll jump. When the player is jumping they cannot adjust or manipulate their direction with the mouse or WASD. The player uses a raycast underneath itself to tell when it has landed. If the player walks over an edge without jumping he can still move around and use WASD to manipulate direction, only if the player jumps they cannot. If the player hits a wall it will invert its velocity to simulate bumping off it. They also cannot manipulate movement while in this state until they fully land.
 - [Coroutine Jump Arc](https://discussions.unity.com/t/coroutine-jump-arc/899081)
 - **The Goat:** [Rigged Goat PBR Textured 3D Model for Animation](https://sketchfab.com/3d-models/rigged-goat-pbr-textured-3d-model-for-animation-be69dcbbe6a64725a3e20417d8296b9c)
