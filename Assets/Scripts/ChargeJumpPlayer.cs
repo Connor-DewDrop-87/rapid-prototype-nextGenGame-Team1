@@ -230,9 +230,15 @@ public class ChargeJumpPlayer : MonoBehaviour
         if (state == JumpState.Charging)
         {
             jumpArrowIndicator.SetActive(true);
+            // Use the Charge Percent along with the Power Multiplier plus the Max and Min Up/Forward to put the indicator into a new position 
+            float t = ChargePercent;
+            float up = Mathf.Lerp(minUp, maxUp, t) * powerMultiplier;
+            float forward = Mathf.Lerp(minForward, maxForward, t) * powerMultiplier;
+            jumpArrowIndicator.GetComponent<Rigidbody>().velocity = transform.forward * forward + Vector3.up * up;
         }
         else
         {
+            jumpArrowIndicator.transform.position = transform.position;
             jumpArrowIndicator.SetActive(false);
         }
     }

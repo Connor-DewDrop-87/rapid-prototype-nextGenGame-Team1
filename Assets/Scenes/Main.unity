@@ -3959,6 +3959,38 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 397d591a7bb542e41a71a9d89734765b, type: 3}
+--- !u!1 &1343682541 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7423743966916559206, guid: 030dd51fb76622d4190c57010eb86b59, type: 3}
+  m_PrefabInstance: {fileID: 5684231910901699333}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &1343682545
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343682541}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1001 &1351414344
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6292,6 +6324,10 @@ PrefabInstance:
       propertyPath: groundCheckExtra
       value: 0.15
       objectReference: {fileID: 0}
+    - target: {fileID: 6094307624682993275, guid: 030dd51fb76622d4190c57010eb86b59, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 6546254308412441987, guid: 030dd51fb76622d4190c57010eb86b59, type: 3}
       propertyPath: m_LocalPosition.z
       value: -3.081
@@ -6300,10 +6336,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6811866468006248300, guid: 030dd51fb76622d4190c57010eb86b59, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7423743966916559206, guid: 030dd51fb76622d4190c57010eb86b59, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1343682545}
   m_SourcePrefab: {fileID: 100100000, guid: 030dd51fb76622d4190c57010eb86b59, type: 3}
 --- !u!1001 &8079731953205841479
 PrefabInstance:

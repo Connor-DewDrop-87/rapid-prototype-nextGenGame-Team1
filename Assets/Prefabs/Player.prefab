@@ -103,8 +103,9 @@ GameObject:
   - component: {fileID: 6491845563284140968}
   - component: {fileID: 6094307624682993275}
   - component: {fileID: 470318267737388787}
+  - component: {fileID: 6811866468006248300}
   m_Layer: 0
-  m_Name: Arrow
+  m_Name: JumpArrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119,8 +120,8 @@ Transform:
   m_GameObject: {fileID: 7423743966916559206}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.762, z: 0}
-  m_LocalScale: {x: 0.35, y: 0.35, z: 0.11}
+  m_LocalPosition: {x: 0, y: -0.364, z: -0}
+  m_LocalScale: {x: 1.11, y: 1.56, z: 0.11}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6546254308412441987}
@@ -132,7 +133,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7423743966916559206}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &470318267737388787
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -175,6 +176,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6811866468006248300
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7423743966916559206}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.99999994, y: 1.0000002, z: 1.0000002}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7831598996298859659
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,6 +316,8 @@ MonoBehaviour:
   wallBounciness: 0.6
   wallAngle: 60
   landIgnoreTime: 0.15
+  stuckSpeed: 0.1
+  stuckTime: 0.2
   state: 0
   isGrounded: 0
   isDead: 0

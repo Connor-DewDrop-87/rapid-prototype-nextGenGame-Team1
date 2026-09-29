@@ -11,11 +11,13 @@ public class JumpMeter : MonoBehaviour
     {
         jumpMeter = GameObject.Find("JumpMeter");
         ps = GameObject.FindGameObjectWithTag("Player").GetComponent<ChargeJumpPlayer>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         jumpMeter.transform.localScale = new Vector3(ps.ChargePercent, 1, 1);
+        
     }
 }
